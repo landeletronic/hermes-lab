@@ -19,14 +19,16 @@ Este arquivo é uma versão pública do inventário. Hostname, endereços IP, in
 
 ## Docker
 
-- Docker CLI/Engine: **não instalado** ou não disponível no `PATH`.
-- Docker Compose: **não instalado** ou não disponível no `PATH`.
-- Serviço systemd `docker`: não encontrado/inativo.
-- Containers existentes: não foi possível listar porque o comando `docker` não existe.
+- Docker CLI/Engine: `29.1.3-0ubuntu4.1`, instalado e validado.
+- Docker Compose V2: `2.40.3+ds1-0ubuntu1`, instalado e validado.
+- Serviço systemd `docker`: ativo.
+- Cgroup: v2.
+- Containers existentes: nenhum serviço do laboratório; somente teste `hello-world` concluído.
+- Imagens do laboratório fixadas e puxadas por digest; detalhes em `docs/compatibility-matrix.md`.
 
 ### Impacto
 
-Antes de criar as stacks será necessário instalar Docker Engine e Docker Compose Plugin. A instalação deve ser documentada separadamente e validada antes de qualquer `docker compose up`.
+O host agora possui Docker Engine e Compose V2 funcionais. Antes de iniciar as stacks, ainda é necessário concluir o lock do provider do modelo, configurar firewall e preparar os arquivos Compose com secrets externos.
 
 ## CPU
 
