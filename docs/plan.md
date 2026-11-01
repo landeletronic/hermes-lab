@@ -16,9 +16,23 @@
 - [x] Verificar recursos de CPU, RAM e armazenamento.
 - [x] Verificar firewall e portas disponíveis.
 - [x] Verificar versão do sistema operacional.
-- [ ] Definir diretórios de dados fora do checkout Git.
+- [x] Definir diretórios de dados fora do checkout Git.
 
-Detalhes registrados em [`docs/inventory-hermes-lab.md`](inventory-hermes-lab.md).
+Diretórios planejados no host:
+
+```text
+/srv/hermes-lab/
+├── honcho/
+├── mem0/
+├── postgres-honcho/
+├── postgres-mem0/
+├── backups/
+└── logs/
+```
+
+Esses diretórios serão criados na fase de implementação, com permissões e ownership definidos conforme os containers. Nenhum dado persistente será armazenado no checkout Git.
+
+**Fase 1 concluída.** Detalhes registrados em [`docs/inventory-hermes-lab.md`](inventory-hermes-lab.md).
 
 ## Fase 2 — Especificação
 
