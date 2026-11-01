@@ -167,6 +167,74 @@ Entregável: matriz de testes reproduzível.
 6. Ler o estado remoto e confirmar os commits publicados.
 7. Entregar relatório final com o que foi concluído, evidências e pendências.
 
+## Artefatos de governança e OpenSpec
+
+Antes da implementação das stacks, criar e versionar:
+
+```text
+MANIFESTO.md
+openspec/
+├── project.md
+├── specs/
+│   ├── hermes-lab.yaml
+│   ├── honcho-stack.yaml
+│   ├── mem0-stack.yaml
+│   ├── security.yaml
+│   └── testing.yaml
+└── changes/
+```
+
+### MANIFESTO.md
+
+Deve registrar os princípios do projeto:
+
+- segurança por padrão;
+- nenhuma credencial no Git;
+- versões sempre fixadas;
+- proibição de `latest`, `stable` e `main` em deployments reproduzíveis;
+- isolamento entre Honcho e Mem0;
+- documentação obrigatória;
+- infraestrutura reproduzível;
+- validação antes de declarar sucesso;
+- uso de dados sintéticos nos testes;
+- acesso restrito à LAN/VPN.
+
+### OpenSpec
+
+Usar especificações orientadas a mudanças para manter requisitos, cenários, tarefas e validações versionados. As especificações devem cobrir:
+
+1. infraestrutura do host;
+2. stack Hermes + Honcho;
+3. stack Hermes + Mem0;
+4. segurança;
+5. testes comparativos;
+6. backup e restauração.
+
+### Manifesto técnico de versões
+
+Criar um manifesto de versões fixadas, sem valores secretos:
+
+```yaml
+hermes:
+  image: pinned-version
+  digest: sha256:...
+
+honcho:
+  version: pinned-version
+
+mem0:
+  version: pinned-version
+
+postgresql:
+  honcho: pinned-version
+  mem0: pinned-version
+
+model:
+  name: GPT-5.6-luna
+```
+
+Os placeholders só poderão ser substituídos após confirmar compatibilidade nas fontes oficiais e no ambiente Docker. Chaves, senhas e tokens ficarão exclusivamente em arquivos locais de ambiente ou secret manager.
+
 ## Regras de autonomia
 
 - Não utilizar tags flutuantes como `latest`, `stable` ou `main` em produção/laboratório reproduzível. Fixar versões compatíveis e, quando disponível, digest imutável para cada imagem; registrar a matriz de compatibilidade antes do deploy.
