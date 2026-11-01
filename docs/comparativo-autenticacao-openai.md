@@ -153,3 +153,93 @@ Para a primeira implementação:
 - Mem0 — Hermes integration: https://docs.mem0.ai/integrations/hermes
 - Mem0 — OpenAI compatibility: https://docs.mem0.ai/open-source/features/openai-compatibility
 - Honcho — self-hosting: https://docs.honcho.dev/v3/contributing/self-hosting
+
+## Por que Honcho e Mem0 também podem precisar de LLMs?
+
+O Hermes precisa de uma LLM para gerar a resposta principal ao usuário. Honcho e Mem0 podem precisar de modelos adicionais para processar a memória.
+
+```text
+Usuário
+  ↓
+Hermes
+  ├── envia a pergunta para a LLM principal
+  ├── recebe a resposta
+  └── encaminha a conversa ao provedor de memória
+
+Honcho/Mem0
+  ├── extraem fatos relevantes
+  ├── identificam preferências e entidades
+  ├── resumem ou derivam contexto
+  ├── geram embeddings
+  └── armazenam e recuperam memórias
+```
+
+### Hermes
+
+O Hermes usa a LLM principal para:
+
+- interpretar a solicitação;
+- decidir quais ferramentas utilizar;
+- executar a tarefa;
+- produzir a resposta final.
+
+A memória nativa do Hermes pode funcionar localmente com arquivos como `MEMORY.md` e `USER.md`, sem Honcho ou Mem0.
+
+### Honcho
+
+No modo self-hosted, o Honcho possui processamento próprio, incluindo o componente `deriver`. Esse processamento transforma mensagens em representações, conclusões e contexto persistente do usuário e do agente.
+
+O PostgreSQL armazena os dados, mas não realiza essa interpretação sozinho. O processamento precisa de um provider de LLM e, conforme a configuração, de embeddings.
+
+### Mem0
+
+O Mem0 normalmente usa:
+
+- LLM para extração e atualização de fatos;
+- modelo de embeddings para busca semântica;
+- PostgreSQL/pgvector para persistência e recuperação vetorial.
+
+O banco de dados não substitui a LLM nem o modelo de embeddings.
+
+## Formas de evitar uma API externa adicional
+
+### Modelos locais
+
+```text
+Hermes  → Codex OAuth / ChatGPT
+Honcho  → Ollama ou outro servidor local
+Mem0    → Ollama ou outro servidor local
+```
+
+Vantagens:
+
+- maior privacidade;
+- nenhuma chave externa para o processamento de memória;
+- funcionamento potencialmente offline.
+
+Desvantagens:
+
+- maior consumo de CPU e RAM;
+- maior latência;
+- qualidade dependente do modelo local;
+- configuração adicional de LLM e embeddings.
+
+### Processamento reduzido
+
+Também é possível reduzir ou desativar parte da extração automática, mas isso diminui a qualidade da memória. O sistema pode armazenar mensagens sem identificar corretamente fatos, preferências e relações.
+
+## Conclusão técnica
+
+A afirmação correta é:
+
+> Somente o Hermes precisa da LLM para conversar diretamente com o usuário. Honcho e Mem0 precisam de modelos adicionais quando são usados como sistemas inteligentes de memória, porque precisam interpretar, extrair, indexar e recuperar informações.
+
+Para a primeira implementação, a decisão permanece:
+
+```text
+Hermes  → Codex OAuth / assinatura ChatGPT
+Honcho  → provider próprio ou modelo local
+Mem0    → provider próprio ou modelo local
+```
+
+Não iniciar os serviços com credenciais fictícias ou placeholders.
