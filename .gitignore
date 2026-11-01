@@ -28,6 +28,7 @@ backups/
 
 # Research source notes may contain internal hostnames, paths, or historical secrets.
 docs/estudo_hermes_lab-*.md
+!docs/estudo_hermes_lab-*_sanitizada.md
 
 # OS/editor
 .DS_Store
