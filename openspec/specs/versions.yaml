@@ -24,7 +24,7 @@ redis:
 
 model:
   name: GPT-5.6-luna
-  provider: openai-codex
+  provider: codex
   authentication: ChatGPT/Codex OAuth
   api_key_required_for_hermes: false
   provider_model_id: pending-codex-validation
