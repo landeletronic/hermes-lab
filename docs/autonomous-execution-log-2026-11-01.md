@@ -61,9 +61,30 @@ Por isso, o modelo operacional inicial foi alterado para `llama3.2:3b`, mantendo
 - Nenhum Webapp Hermes foi iniciado.
 - Nenhum serviço foi publicado na LAN.
 
+## Validação Mem0 OSS
+
+- SDK Mem0 OSS `2.2.1` executado com Ollama e PostgreSQL/pgvector isolado.
+- Configuração corrigida para `embedding_model_dims=768`; sem essa configuração o SDK criava a tabela com o padrão OpenAI de 1536 dimensões.
+- `add(infer=true)`: aprovado com persistência de memória sintética.
+- `search(filters={user_id})`: aprovado, com resultado semântico retornado.
+- `update`: aprovado.
+- `delete`: aprovado; busca posterior retornou lista vazia.
+- O plugin Mem0 foi instalado e o Hermes reportou `Provider: mem0`, `Plugin: installed` e `Status: available` em uma imagem local de teste.
+- A integração automática Hermes + Mem0 ainda não foi aceita como ponta a ponta; falta executar uma sessão Hermes com provider ativo e modelo principal autenticado.
+
+## Ajuste de desempenho
+
+- `OLLAMA_MAX_LOADED_MODELS` alterado para `2`.
+- `OLLAMA_KEEP_ALIVE` alterado para `10m`, mantendo LLM e embeddings aquecidos durante o workload.
+- Mem0 com `llama3.2:3b`: aproximadamente 360 segundos para uma extração curta.
+- Mem0 com `llama3.2:1b`: aproximadamente 119 segundos; não adequado para o deriver Honcho porque falhou na saída JSON estruturada.
+- Honcho com `llama3.2:1b`: fila processada, mas falhou na validação de saída estruturada.
+- Honcho permanece com `llama3.2:3b` para nova validação; ainda não há conclusão derivada verificável.
+
 ## Bloqueios atuais
 
-1. O modo HTTP self-hosted do Mem0, no commit inspecionado, não aceita Ollama entre os providers bundled. O plano foi alterado para Mem0 OSS in-process com Ollama e pgvector.
-2. A integração Mem0 OSS com Hermes ainda precisa de teste ponta a ponta.
-3. Honcho precisa de ajuste de desempenho/configuração antes de ser considerado funcional: o host CPU-only não concluiu a derivação sintética dentro da janela de teste.
-4. O login OAuth/Codex do Hermes ainda não foi executado; não iniciar Webapps autenticados sem esse gate.
+1. O modo HTTP self-hosted do Mem0, no commit inspecionado, não aceita Ollama entre os providers bundled. O caminho adotado é Mem0 OSS in-process com Ollama e pgvector.
+2. A integração automática Mem0 OSS com uma sessão Hermes ainda precisa de teste ponta a ponta.
+3. Honcho ainda não produziu uma conclusão sintética verificável com o modelo local no host; o Webapp não deve ser iniciado antes desse gate.
+4. O plugin Honcho do catálogo falhou na resolução de dependências do Hermes v0.22.5 por erro de workspace/uv; a instalação manual do SDK também exige empacotamento separado do plugin.
+5. O login OAuth/Codex do Hermes ainda não foi executado; não iniciar Webapps autenticados sem esse gate.

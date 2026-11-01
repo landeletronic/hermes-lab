@@ -30,7 +30,8 @@ ollama:
   image: ollama/ollama@sha256:b2f0122c476bc9fe7ce679d8bb4bd555351e25e2554eefb156f61cb0a89cf429
   version: 0.40.13
   network: internal
-  max_loaded_models: 1
+  max_loaded_models: 2
+  keep_alive: 10m
 
 model:
   name: llama3.2:3b
