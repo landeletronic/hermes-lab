@@ -9,6 +9,7 @@ honcho:
   version: v3.5.0
   source_revision: 0cd37ddbd88f51cdac7c660d7372f4b2fd40a4b3
   image: ghcr.io/plastic-labs/honcho:v3.5.0@sha256:48c08d96b96d9a8012e6200bd9aa1dd070a96fb1c417fe37cd2ca40650c809e1
+  local_image: hermes-lab-honcho:3.5.0-local@sha256:491ec67c4f3125fa3a2786fd8b14387b1c9fa796eb1509fed60c99bcd4162788
 
 mem0:
   mode: oss

@@ -1,0 +1,91 @@
+name: hermes-lab-honcho
+
+services:
+  database:
+    image: pgvector/pgvector:pg15@sha256:3a780571a333f6b7a3142bc7bfdd48bc9536f664e0ff74f48499d0a5d50e39ea
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: honcho
+      POSTGRES_USER: honcho
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set in .env}
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+      - /srv/hermes-lab/postgres-honcho:/var/lib/postgresql/data
+    networks: [honcho_internal]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U honcho -d honcho"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+    mem_limit: 768m
+    cpus: 0.5
+    pids_limit: 256
+
+  redis:
+    image: redis:8.2@sha256:8faf1ffc0fa573b9b0f5a8f886e45e27b498cdd5e9c7ee3c611856d30d0d4401
+    restart: unless-stopped
+    command: ["redis-server", "--appendonly", "yes"]
+    volumes:
+      - /srv/hermes-lab/honcho/redis:/data
+    networks: [honcho_internal]
+    healthcheck:
+      test: ["CMD-SHELL", "redis-cli ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+    mem_limit: 256m
+    cpus: 0.25
+    pids_limit: 128
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: hermes-lab-honcho:3.5.0-local
+    restart: unless-stopped
+    entrypoint: ["sh", "docker/entrypoint.sh"]
+    env_file: [.env]
+    environment:
+      DB_CONNECTION_URI: postgresql+psycopg://honcho:${POSTGRES_PASSWORD}@database:5432/honcho
+      CACHE_URL: redis://redis:6379/0?suppress=true
+      CACHE_ENABLED: "true"
+    depends_on:
+      database: {condition: service_healthy}
+      redis: {condition: service_healthy}
+    networks: [honcho_internal, ollama_internal]
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - /app/.venv/bin/python -c 'import urllib.request; urllib.request.urlopen("http://127.0.0.1:8000/health")'
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 30s
+    mem_limit: 768m
+    cpus: 0.75
+    pids_limit: 256
+
+  deriver:
+    image: hermes-lab-honcho:3.5.0-local
+    restart: unless-stopped
+    entrypoint: ["/app/.venv/bin/python", "-m", "src.deriver"]
+    env_file: [.env]
+    environment:
+      DB_CONNECTION_URI: postgresql+psycopg://honcho:${POSTGRES_PASSWORD}@database:5432/honcho
+      CACHE_URL: redis://redis:6379/0?suppress=true
+      CACHE_ENABLED: "true"
+    depends_on:
+      api: {condition: service_healthy}
+      database: {condition: service_healthy}
+      redis: {condition: service_healthy}
+    networks: [honcho_internal, ollama_internal]
+    mem_limit: 768m
+    cpus: 1.0
+    pids_limit: 256
+
+networks:
+  honcho_internal:
+    internal: true
+  ollama_internal:
+    external: true
+    name: hermes-lab-ollama
