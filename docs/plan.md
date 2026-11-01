@@ -42,8 +42,11 @@ Esses diretórios serão criados na fase de implementação, com permissões e o
 - [x] Definir PostgreSQL por stack — Honcho com pgvector/pg15; Mem0 com pgvector/pg17.
 - [x] Definir autenticação e exposição somente à LAN/VPN.
 - [x] Definir estratégia de backup.
+- [x] Selecionar Ollama como provider local.
+- [x] Selecionar `qwen3:4b` para extração/derivação inicial.
+- [x] Selecionar `nomic-embed-text:v1.5` para embeddings.
 
-A Fase 2 permanece aberta somente até validar o `provider_model_id` de `GPT-5.6-luna` no provedor escolhido e confirmar o lock final no primeiro build.
+A Fase 2 permanece aberta somente até validar os digests dos modelos Ollama, o endpoint OpenAI-compatible nos dois serviços de memória e o consumo real no host.
 
 ## Fase 3 — Implementação
 

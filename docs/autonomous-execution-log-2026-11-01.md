@@ -12,17 +12,33 @@
 - Inventário público sanitizado para remover endereços e identificadores operacionais.
 - Histórico de alterações versionado e publicado no GitHub.
 
-## Bloqueio atual
+## Estado atual
 
-A estratégia de autenticação do Hermes foi definida como **OpenAI Codex OAuth**, usando o login/assinatura do ChatGPT, sem chave de API avulsa para o Hermes principal.
+O Hermes continuará podendo usar Codex OAuth/ChatGPT para a interface principal, mas o processamento de memória será local para evitar credenciais adicionais:
 
-Isso remove a necessidade de `OPENAI_API_KEY` no container do Hermes, mas não resolve automaticamente as credenciais internas de Honcho e Mem0. Esses serviços executam derivação, embeddings e processamento de memória próprios e precisam de um provider configurado separadamente — por API, endpoint compatível ou modelo local.
+```text
+Hermes  → Codex OAuth/ChatGPT ou provider configurado no Hermes
+Honcho  → Ollama
+Mem0    → Ollama
+```
 
-Também precisamos validar se `GPT-5.6-luna` é um `provider_model_id` aceito pelo backend `openai-codex`. O nome lógico foi preservado, mas não será assumido como identificador técnico.
+A opção de usar `GPT-5.6-luna` deixa de ser a configuração principal do laboratório. O foco agora é validar `qwen3:4b` e `nomic-embed-text:v1.5` no host.
+## Nova decisão
+
+A estratégia foi alterada para usar uma LLM local com Ollama, evitando credenciais adicionais para Honcho e Mem0:
+
+- provider: Ollama;
+- LLM inicial: `qwen3:4b`;
+- embeddings: `nomic-embed-text:v1.5`;
+- um serviço Ollama compartilhado pelas duas stacks;
+- modelos e volumes fora do checkout Git.
+
+Os digests e o consumo real ainda precisam ser validados no host. A compatibilidade do endpoint OpenAI-compatible do Ollama com Honcho e Mem0 será testada antes do deploy final.
 
 ## Próxima ação necessária
 
-1. Autenticar o Hermes via fluxo OAuth/Codex em uma sessão interativa segura no host ou por túnel autorizado.
-2. Confirmar o modelo disponível no catálogo Codex.
-3. Definir como Honcho e Mem0 obterão LLM/embeddings sem expor uma chave no Git — API separada, endpoint compatível ou modelos locais.
-4. Só então iniciar os containers de aplicação.
+1. Instalar Ollama ou executar o serviço em container controlado.
+2. Baixar os modelos fixados e registrar seus digests.
+3. Validar geração e embeddings.
+4. Validar Honcho e Mem0 contra o endpoint local.
+5. Só então iniciar os Webapps do Hermes.

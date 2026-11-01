@@ -35,6 +35,7 @@ Os ambientes devem usar o mesmo modelo (`GPT-5.6-luna`) e permanecer isolados em
 - [`docs/compatibility-matrix.md`](docs/compatibility-matrix.md) — matriz de compatibilidade verificada.
 - [`docs/plan.md`](docs/plan.md) — plano de implementação e testes.
 - [`docs/comparativo-autenticacao-openai.md`](docs/comparativo-autenticacao-openai.md) — comparação entre Codex OAuth, credenciais separadas e endpoint OpenAI-compatible.
+- [`docs/ollama-model-selection.md`](docs/ollama-model-selection.md) — seleção provisória de LLM e embeddings locais.
 - [`docs/research-hermes-honcho-mem0.md`](docs/research-hermes-honcho-mem0.md) — pesquisa consolidada e decisões de comparação.
 - [`SECURITY.md`](SECURITY.md) — regras de segurança e publicação.
 

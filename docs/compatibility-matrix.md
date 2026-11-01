@@ -15,12 +15,14 @@
 | Mem0 Python SDK | `v2.2.1` | `94c3fe9f238f3dbf29c9ce98643bd71eb13077cd` | release oficial verificada |
 | Docker Engine | pacote Ubuntu | `29.1.3-0ubuntu4.1` | instalado e validado |
 | Docker Compose | pacote Ubuntu | `2.40.3+ds1-0ubuntu1` | instalado e validado |
-| Modelo | provider externo | `GPT-5.6-luna` | model ID ainda depende do provider escolhido |
+| Ollama LLM | `qwen3:4b` | pending-Ollama-digest | seleção inicial; digest e consumo ainda pendentes |
+| Ollama embeddings | `nomic-embed-text:v1.5` | pending-Ollama-digest | seleção inicial; dimensão e digest ainda pendentes |
 
 ## Observações
 
 - Os digests acima são para a plataforma `linux/amd64` do host.
 - O servidor Mem0 não possuiu uma release/tag específica confirmada para o caminho self-hosted; por isso será construído a partir de commit imutável do repositório oficial.
 - Antes do deploy, cada imagem deve ser puxada, inspecionada e registrada no lock final.
-- O modelo `GPT-5.6-luna` deve ser validado na API/provider selecionado e não pode ser assumido como ID universal.
+- O provider local selecionado provisoriamente é Ollama, com `qwen3:4b` para extração/derivação e `nomic-embed-text:v1.5` para embeddings.
+- Os digests dos modelos Ollama, a dimensão do embedding e o consumo real ainda precisam ser validados no host.
 - A matriz deve ser atualizada quando qualquer pin mudar.
