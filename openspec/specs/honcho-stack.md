@@ -5,8 +5,12 @@
 - Honcho API, deriver, PostgreSQL/pgvector e Redis em Compose próprio.
 - PostgreSQL e Redis exclusivos desta stack.
 - LLM e embeddings apontam para o Ollama interno.
-- Honcho usa `llama3.2:3b` inicialmente, com `qwen3:4b` como fallback de teste.
-- Embeddings usam `nomic-embed-text:v1.5`, dimensão 768.
+- Honcho usa `llama3.2:3b` no deriver, com `think=false` enviado como booleano em `provider_params.extra_body`.
+- `structured_output_mode=json_object` permanece ativo para o transporte OpenAI-compatible do Ollama.
+- Limites validados: `DERIVER_MAX_INPUT_TOKENS=1536` e `DERIVER_MODEL_CONFIG__MAX_OUTPUT_TOKENS=512`.
+- `qwen3:4b` foi testado com `think=false` e descartado: truncou a representação em 96, 256 e 512 tokens.
+- `llama3.2:3b` produziu duas observações persistidas em uma execução final; fila terminou vazia.
+- Latência observada no processamento final: aproximadamente 172 segundos, com uma tentativa de retry de structured output.
 
 ## Critérios de aceitação
 

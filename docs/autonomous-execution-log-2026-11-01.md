@@ -81,10 +81,18 @@ Por isso, o modelo operacional inicial foi alterado para `llama3.2:3b`, mantendo
 - Honcho com `llama3.2:1b`: fila processada, mas falhou na validação de saída estruturada.
 - Honcho permanece com `llama3.2:3b` para nova validação; ainda não há conclusão derivada verificável.
 
+## Resultado da validação Honcho
+
+- O deriver final com `llama3.2:3b`, `think=false`, `json_object`, entrada 1536 e saída 512 processou a fila sintética até zero pendências.
+- Foram persistidas 2 observações na execução final, elevando o total da tabela de evidências para 4.
+- Latência total observada: aproximadamente 172 segundos para uma mensagem curta.
+- O modelo apresentou uma tentativa de retry por structured output, mas concluiu o processamento e persistiu as observações.
+- `qwen3:4b` foi descartado após truncar repetidamente a saída mesmo com `think=false` e 512 tokens.
+
 ## Bloqueios atuais
 
 1. O modo HTTP self-hosted do Mem0, no commit inspecionado, não aceita Ollama entre os providers bundled. O caminho adotado é Mem0 OSS in-process com Ollama e pgvector.
 2. A integração automática Mem0 OSS com uma sessão Hermes ainda precisa de teste ponta a ponta.
-3. Honcho ainda não produziu uma conclusão sintética verificável com o modelo local no host; o Webapp não deve ser iniciado antes desse gate.
+3. Honcho agora possui uma derivação funcional, porém com latência elevada em CPU-only; deve ser tratado como modo de validação, não como baixa latência.
 4. O plugin Honcho do catálogo falhou na resolução de dependências do Hermes v0.22.5 por erro de workspace/uv; a instalação manual do SDK também exige empacotamento separado do plugin.
-5. O login OAuth/Codex do Hermes ainda não foi executado; não iniciar Webapps autenticados sem esse gate.
+5. O login OAuth/Codex do Hermes ainda não foi executado; os Webapps continuam pendentes.
