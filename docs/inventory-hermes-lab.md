@@ -2,6 +2,7 @@
 
 **Coleta inicial:** 2026-11-01 15:32:51 UTC
 **Atualização de memória:** 2026-11-01 16:16:02 UTC
+**Atualização de swap:** 2026-11-01 após manutenção do host
 **Método:** comandos somente leitura via SSH
 **Usuário remoto:** `tlandskron`
 
@@ -40,8 +41,9 @@ Antes de criar as stacks será necessário instalar Docker Engine e Docker Compo
 - RAM total: `7.2 GiB` observados pelo sistema (`7.5 GB` em `/proc/meminfo`)
 - RAM disponível no momento da atualização: `6.7 GiB`
 - RAM usada: `454 MiB`
-- Swap total: `3.8 GiB`
+- Swap total: `8.0 GiB`
 - Swap usada: `0 B`
+- Arquivo ativo: `/swap.img` com permissões `600`
 
 ### Avaliação preliminar
 
