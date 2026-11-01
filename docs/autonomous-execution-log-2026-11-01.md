@@ -45,10 +45,25 @@ O teste CPU-only no host mostrou aproximadamente:
 
 Por isso, o modelo operacional inicial foi alterado para `llama3.2:3b`, mantendo `qwen3:4b` instalado como fallback para comparar qualidade de extração e português. A decisão pode ser revertida somente após medir a carga real de Honcho/Mem0.
 
-## Próxima ação necessária
+## Estado da validação de infraestrutura
 
-1. Instalar Ollama ou executar o serviço em container controlado.
-2. Baixar os modelos fixados e registrar seus digests.
-3. Validar geração e embeddings.
-4. Validar Honcho e Mem0 contra o endpoint local.
-5. Só então iniciar os Webapps do Hermes.
+- Firewall UFW ativo, entrada negada por padrão e SSH permitido somente pela LAN administrativa.
+- Ollama está gerenciado por Compose, saudável, sem porta publicada e na rede Docker interna.
+- Modelos baixados e identificados por digest:
+  - `llama3.2:3b`;
+  - `qwen3:4b`;
+  - `nomic-embed-text:v1.5`.
+- Embeddings validados com dimensão 768.
+- Honcho PostgreSQL, Redis e API foram iniciados com sucesso.
+- A API Honcho respondeu `/health` com `{"status":"ok"}`.
+- A imagem Honcho foi reconstruída com os tokenizers necessários pré-carregados, evitando dependência de DNS externo em runtime.
+- O teste de derivação Honcho iniciou chamadas ao Ollama, mas apresentou latência excessiva em CPU e permaneceu com work units em andamento. O deriver foi interrompido para proteger os recursos do host.
+- Nenhum Webapp Hermes foi iniciado.
+- Nenhum serviço foi publicado na LAN.
+
+## Bloqueios atuais
+
+1. O modo HTTP self-hosted do Mem0, no commit inspecionado, não aceita Ollama entre os providers bundled. O plano foi alterado para Mem0 OSS in-process com Ollama e pgvector.
+2. A integração Mem0 OSS com Hermes ainda precisa de teste ponta a ponta.
+3. Honcho precisa de ajuste de desempenho/configuração antes de ser considerado funcional: o host CPU-only não concluiu a derivação sintética dentro da janela de teste.
+4. O login OAuth/Codex do Hermes ainda não foi executado; não iniciar Webapps autenticados sem esse gate.
