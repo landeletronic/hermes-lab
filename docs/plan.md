@@ -12,11 +12,13 @@
 
 ## Fase 1 — Inventário do host
 
-- [ ] Verificar Docker e Docker Compose.
-- [ ] Verificar recursos de CPU, RAM e armazenamento.
-- [ ] Verificar firewall e portas disponíveis.
-- [ ] Verificar versão do sistema operacional.
+- [x] Verificar Docker e Docker Compose — ainda não instalados.
+- [x] Verificar recursos de CPU, RAM e armazenamento.
+- [x] Verificar firewall e portas disponíveis.
+- [x] Verificar versão do sistema operacional.
 - [ ] Definir diretórios de dados fora do checkout Git.
+
+Detalhes registrados em [`docs/inventory-hermes-lab.md`](inventory-hermes-lab.md).
 
 ## Fase 2 — Especificação
 
