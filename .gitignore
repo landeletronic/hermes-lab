@@ -26,6 +26,9 @@ logs/
 volumes/
 backups/
 
+# Research source notes may contain internal hostnames, paths, or historical secrets.
+docs/estudo_hermes_lab-*.md
+
 # OS/editor
 .DS_Store
 Thumbs.db
