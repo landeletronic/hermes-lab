@@ -1,6 +1,7 @@
 # Inventário do host `hermes-lab`
 
-**Coleta:** 2026-11-01 15:32:51 UTC
+**Coleta inicial:** 2026-11-01 15:32:51 UTC
+**Atualização de memória:** 2026-11-01 16:16:02 UTC
 **Método:** comandos somente leitura via SSH
 **Usuário remoto:** `tlandskron`
 
@@ -36,22 +37,15 @@ Antes de criar as stacks será necessário instalar Docker Engine e Docker Compo
 
 ## Memória
 
-- RAM total: `3.3 GiB`
-- RAM disponível no momento da coleta: `2.8 GiB`
+- RAM total: `7.2 GiB` observados pelo sistema (`7.5 GB` em `/proc/meminfo`)
+- RAM disponível no momento da atualização: `6.7 GiB`
+- RAM usada: `454 MiB`
 - Swap total: `3.8 GiB`
 - Swap usada: `0 B`
 
 ### Avaliação preliminar
 
-A capacidade é suficiente para um laboratório inicial, mas é limitada para executar simultaneamente:
-
-- dois Hermes;
-- Honcho self-hosted;
-- Mem0 self-hosted;
-- dois PostgreSQL;
-- eventuais serviços auxiliares.
-
-Será necessário aplicar limites de memória, iniciar os serviços gradualmente e monitorar consumo. Dependendo dos requisitos oficiais das imagens e do comportamento dos testes, pode ser recomendável aumentar a RAM para pelo menos 6–8 GiB.
+A memória foi ampliada e agora oferece uma margem muito melhor para o laboratório. Ainda será necessário acompanhar o consumo durante a execução simultânea dos dois Hermes, Honcho, Mem0 e PostgreSQL, mas a capacidade atual é adequada para iniciar a implantação controlada. Devemos manter limites por container e monitoramento antes de aumentar a carga.
 
 ## Armazenamento
 
