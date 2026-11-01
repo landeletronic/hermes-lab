@@ -15,14 +15,16 @@
 | Mem0 Python SDK | `v2.2.1` | `94c3fe9f238f3dbf29c9ce98643bd71eb13077cd` | release oficial verificada |
 | Docker Engine | pacote Ubuntu | `29.1.3-0ubuntu4.1` | instalado e validado |
 | Docker Compose | pacote Ubuntu | `2.40.3+ds1-0ubuntu1` | instalado e validado |
-| Ollama LLM | `qwen3:4b` | pending-Ollama-digest | seleção inicial; digest e consumo ainda pendentes |
-| Ollama embeddings | `nomic-embed-text:v1.5` | pending-Ollama-digest | seleção inicial; dimensão e digest ainda pendentes |
+| Ollama LLM operacional | `llama3.2:3b` | `a80c4f17acd55265feec403c7aef86be0c25983ab279d83f3bcd3abbcb5b8b72` | validado no host; resposta curta em ~7 s |
+| Ollama LLM fallback | `qwen3:4b` | `359d7dd4bcdab3d86b87d73ac27966f4dbb9f5efdfcc75d34a8764a09474fae7` | validado no host; resposta curta em ~46 s |
+| Ollama embeddings | `nomic-embed-text:v1.5` | `0a109f422b47e3a30ba2b10eca18548e944e8a23073ee3f3e947efcf3c45e59f` | dimensão validada: 768 |
 
 ## Observações
 
 - Os digests acima são para a plataforma `linux/amd64` do host.
 - O servidor Mem0 não possuiu uma release/tag específica confirmada para o caminho self-hosted; por isso será construído a partir de commit imutável do repositório oficial.
 - Antes do deploy, cada imagem deve ser puxada, inspecionada e registrada no lock final.
-- O provider local selecionado provisoriamente é Ollama, com `qwen3:4b` para extração/derivação e `nomic-embed-text:v1.5` para embeddings.
-- Os digests dos modelos Ollama, a dimensão do embedding e o consumo real ainda precisam ser validados no host.
-- A matriz deve ser atualizada quando qualquer pin mudar.
+- O provider local selecionado é Ollama, com `llama3.2:3b` como modelo operacional, `qwen3:4b` como fallback e `nomic-embed-text:v1.5` para embeddings.
+- O endpoint de geração e o endpoint de embeddings foram exercitados no host.
+- A dimensão validada do embedding é 768.
+- A integração com Honcho e Mem0 ainda não foi validada.

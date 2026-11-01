@@ -22,12 +22,21 @@ postgresql:
 redis:
   honcho_image: redis:8.2@sha256:8faf1ffc0fa573b9b0f5a8f886e45e27b498cdd5e9c7ee3c611856d30d0d4401
 
+ollama:
+  image: ollama/ollama@sha256:b2f0122c476bc9fe7ce679d8bb4bd555351e25e2554eefb156f61cb0a89cf429
+  version: 0.40.13
+  network: internal
+  max_loaded_models: 1
+
 model:
-  name: qwen3:4b
+  name: llama3.2:3b
   provider: ollama
   authentication: local
   api_key_required: false
-  provider_model_id: qwen3:4b
+  provider_model_id: llama3.2:3b
+  digest: a80c4f17acd55265feec403c7aef86be0c25983ab279d83f3bcd3abbcb5b8b72
+  fallback: qwen3:4b
+  fallback_digest: 359d7dd4bcdab3d86b87d73ac27966f4dbb9f5efdfcc75d34a8764a09474fae7
 
 embeddings:
   name: nomic-embed-text:v1.5
@@ -35,6 +44,8 @@ embeddings:
   authentication: local
   api_key_required: false
   provider_model_id: nomic-embed-text:v1.5
+  digest: 0a109f422b47e3a30ba2b10eca18548e944e8a23073ee3f3e947efcf3c45e59f
+  dimension: 768
 
 policy:
   floating_tags_allowed: false

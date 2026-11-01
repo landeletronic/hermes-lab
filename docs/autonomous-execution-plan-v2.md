@@ -16,8 +16,9 @@ Ambas usarão um serviço Ollama local compartilhado para processamento de memó
 
 ```text
 Ollama
-├── qwen3:4b                 # LLM para extração/derivação
-└── nomic-embed-text:v1.5    # embeddings
+├── llama3.2:3b             # LLM operacional inicial
+├── qwen3:4b                # fallback para avaliar qualidade/português
+└── nomic-embed-text:v1.5   # embeddings
 ```
 
 O Hermes principal poderá usar Codex OAuth/ChatGPT, mas Honcho e Mem0 não dependerão automaticamente dessa autenticação.
@@ -203,9 +204,9 @@ Subagentes não terão autorização para publicar, alterar firewall, manipular 
 1. Escolher instalação containerizada ou nativa conforme pin reproduzível.
 2. Fixar imagem/binário do Ollama.
 3. Iniciar Ollama somente na rede interna.
-4. Baixar `qwen3:4b` e `nomic-embed-text:v1.5`.
+4. Baixar `llama3.2:3b`, `qwen3:4b` e `nomic-embed-text:v1.5`.
 5. Registrar digests dos modelos.
-6. Testar geração.
+6. Testar geração com o modelo operacional e o fallback.
 7. Testar embeddings e dimensão retornada.
 8. Medir RAM, CPU, latência e tamanho em disco.
 9. Configurar `OLLAMA_MAX_LOADED_MODELS=1`.

@@ -28,12 +28,22 @@ A opção de usar `GPT-5.6-luna` deixa de ser a configuração principal do labo
 A estratégia foi alterada para usar uma LLM local com Ollama, evitando credenciais adicionais para Honcho e Mem0:
 
 - provider: Ollama;
-- LLM inicial: `qwen3:4b`;
+- LLM operacional inicial: `llama3.2:3b`;
+- fallback para comparação: `qwen3:4b`;
 - embeddings: `nomic-embed-text:v1.5`;
 - um serviço Ollama compartilhado pelas duas stacks;
 - modelos e volumes fora do checkout Git.
 
-Os digests e o consumo real ainda precisam ser validados no host. A compatibilidade do endpoint OpenAI-compatible do Ollama com Honcho e Mem0 será testada antes do deploy final.
+Os digests foram registrados. A compatibilidade do endpoint OpenAI-compatible do Ollama com Honcho e Mem0 ainda será testada antes do deploy final.
+
+## Resultado preliminar de desempenho
+
+O teste CPU-only no host mostrou aproximadamente:
+
+- `llama3.2:3b`: resposta curta em 7 segundos;
+- `qwen3:4b`: resposta curta em 46 segundos e saída de raciocínio extensa.
+
+Por isso, o modelo operacional inicial foi alterado para `llama3.2:3b`, mantendo `qwen3:4b` instalado como fallback para comparar qualidade de extração e português. A decisão pode ser revertida somente após medir a carga real de Honcho/Mem0.
 
 ## Próxima ação necessária
 
