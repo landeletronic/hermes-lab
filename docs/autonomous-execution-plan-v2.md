@@ -229,20 +229,20 @@ Subagentes não terão autorização para publicar, alterar firewall, manipular 
 
 **Critério:** memória Honcho funciona sem provider externo.
 
-### Fase 5 — Stack Mem0
+### Fase 5 — Stack Mem0 OSS self-hosted
 
 1. Criar rede exclusiva da stack.
 2. Criar PostgreSQL/pgvector próprio.
-3. Fixar e construir o servidor Mem0 a partir de commit imutável.
-4. Configurar Mem0 para usar Ollama via endpoint compatível, se validado.
-5. Configurar embedding local e dimensão correta.
-6. Configurar plugin Mem0 no Hermes.
+3. Fixar o SDK/plugin Mem0 OSS em commit imutável.
+4. Configurar Mem0 OSS para usar Ollama nativo.
+5. Configurar embedding local e dimensão 768.
+6. Integrar Mem0 OSS ao Hermes em container controlado.
 7. Configurar Hermes Webapp Mem0.
 8. Configurar autenticação.
 9. Publicar somente a porta Webapp designada.
 10. Executar health checks e teste funcional.
 
-**Critério:** memória Mem0 funciona sem provider externo.
+O servidor HTTP Mem0 permanece bloqueado nesta fase porque o commit self-hosted inspecionado aceita apenas providers bundled `openai`, `anthropic` e `gemini`. Só será usado com extensão própria testada e fixada.
 
 ### Fase 6 — comparação controlada
 
