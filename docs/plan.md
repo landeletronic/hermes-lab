@@ -36,12 +36,14 @@ Esses diretórios serão criados na fase de implementação, com permissões e o
 
 ## Fase 2 — Especificação
 
-- [ ] Fixar versões das imagens.
-- [ ] Confirmar requisitos oficiais do Honcho self-hosted.
-- [ ] Confirmar requisitos oficiais do Mem0 self-hosted.
-- [ ] Definir PostgreSQL por stack.
-- [ ] Definir autenticação e exposição somente à LAN/VPN.
-- [ ] Definir estratégia de backup.
+- [x] Fixar versões das imagens — tags e digests amd64 registrados em `openspec/specs/versions.yaml`.
+- [x] Confirmar requisitos oficiais do Honcho self-hosted.
+- [x] Confirmar requisitos oficiais do Mem0 self-hosted.
+- [x] Definir PostgreSQL por stack — Honcho com pgvector/pg15; Mem0 com pgvector/pg17.
+- [x] Definir autenticação e exposição somente à LAN/VPN.
+- [x] Definir estratégia de backup.
+
+A Fase 2 permanece aberta somente até validar o `provider_model_id` de `GPT-5.6-luna` no provedor escolhido e confirmar o lock final no primeiro build.
 
 ## Fase 3 — Implementação
 

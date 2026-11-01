@@ -44,8 +44,32 @@ O swap original era `/swap.img` com aproximadamente 3.8 GiB. A expansão inicial
 
 ## Verificação final
 
+## Docker instalado posteriormente
+
+Após a autorização autônoma, foram instalados e verificados:
+
+- Docker Engine Ubuntu: `29.1.3-0ubuntu4.1`;
+- Docker Compose V2: `2.40.3+ds1-0ubuntu1`;
+- serviço Docker: ativo;
+- cgroup: v2;
+- diretório do daemon: `/var/lib/docker`.
+
+O usuário `tlandskron` foi adicionado ao grupo `docker`, mas a sessão SSH atual pode precisar ser encerrada e reaberta para que a associação de grupo seja aplicada sem `sudo`.
+
+Foi executado um teste controlado com `hello-world`; o digest observado foi:
+
+```text
+sha256:c567b231f65614688711a75f31518a064258a51d442117a3e771a3a8fdba78ef
+```
+
+Esse teste usa uma imagem de validação e não representa um pin de deployment do laboratório.
+
+## Verificação final da manutenção
+
 ```text
 qemu-guest-agent: active
 swap: 8.0Gi total, 0B used
 apt: no upgradable packages listed
+docker: 29.1.3
+docker compose: 2.40.3
 ```

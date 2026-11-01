@@ -1,3 +1,15 @@
+# Local deployment artifacts
+.env
+.env.*
+!.env.example
+docker-compose.override.yml
+docker-compose.*.local.yml
+*.log
+*.dump
+*.sql
+*.backup
+*.bak
+
 # Secrets and local configuration
 .env
 .env.*

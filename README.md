@@ -28,7 +28,11 @@ Os ambientes devem usar o mesmo modelo (`GPT-5.6-luna`) e permanecer isolados em
 
 ## Documentação
 
+- [`MANIFESTO.md`](MANIFESTO.md) — princípios e proibições do projeto.
+- [`openspec/project.md`](openspec/project.md) — especificação geral.
+- [`openspec/specs/versions.yaml`](openspec/specs/versions.yaml) — pins e digests.
 - [`docs/architecture.md`](docs/architecture.md) — arquitetura e decisões.
+- [`docs/compatibility-matrix.md`](docs/compatibility-matrix.md) — matriz de compatibilidade verificada.
 - [`docs/plan.md`](docs/plan.md) — plano de implementação e testes.
 - [`docs/research-hermes-honcho-mem0.md`](docs/research-hermes-honcho-mem0.md) — pesquisa consolidada e decisões de comparação.
 - [`SECURITY.md`](SECURITY.md) — regras de segurança e publicação.

@@ -1,4 +1,6 @@
-# Inventário do host `hermes-lab`
+# Segurança pública
+
+Este arquivo é uma versão pública do inventário. Hostname, endereços IP, interfaces, portas administrativas detalhadas e identificadores do host foram omitidos. O inventário operacional completo deve permanecer fora do repositório público.
 
 **Coleta inicial:** 2026-11-01 15:32:51 UTC
 **Atualização de memória:** 2026-11-01 16:16:02 UTC
@@ -8,14 +10,12 @@
 
 ## Sistema operacional
 
-- Hostname: `hermes-lab`
+- Hostname: não publicado neste documento
 - Plataforma: máquina virtual KVM/QEMU
 - Sistema: Ubuntu 26.04.1 LTS (`resolute`)
 - Kernel: `7.0.0-42-generic`
 - Arquitetura: `x86_64`
-- Interface LAN: `ens18`
-- IPv4 observado: `192.168.15.235/24`
-- IPv6 global observado: `2804:7f4:c013:f9fb:be24:11ff:fe53:210d/64`
+- Interface e endereços: omitidos por segurança; consultar inventário operacional privado
 
 ## Docker
 
@@ -82,8 +82,8 @@ Não foi possível confirmar uma política de firewall local por UFW ou firewall
 
 | Endereço | Porta | Observação |
 |---|---:|---|
-| `0.0.0.0` / `[::]` | 22 | SSH |
-| `127.0.0.53` / `127.0.0.54` | 53 | resolvedor DNS local |
+| endereço de administração | 22 | SSH — origem restrita por firewall |
+| loopback | 53 | resolvedor DNS local |
 
 Não foram observadas portas TCP de Docker, Hermes, Honcho, Mem0 ou PostgreSQL em escuta no momento da coleta.
 
@@ -101,7 +101,7 @@ Os PostgreSQL devem ficar apenas na rede interna do Docker, sem publicação na 
 - [ ] Validar `docker run hello-world` ou equivalente.
 - [ ] Definir usuário/grupo e política de acesso ao Docker socket.
 - [ ] Definir firewall para SSH e Webapps.
-- [ ] Confirmar se 3.3 GiB de RAM será suficiente ou aumentar a RAM da VM.
+- [x] Confirmar capacidade de memória após expansão para aproximadamente 8 GiB.
 - [ ] Definir diretórios de volumes fora do checkout Git.
 - [ ] Definir política de backup e retenção.
 - [ ] Confirmar requisitos de PostgreSQL, Honcho e Mem0.
