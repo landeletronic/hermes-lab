@@ -169,6 +169,7 @@ Entregável: matriz de testes reproduzível.
 
 ## Regras de autonomia
 
+- Não utilizar tags flutuantes como `latest`, `stable` ou `main` em produção/laboratório reproduzível. Fixar versões compatíveis e, quando disponível, digest imutável para cada imagem; registrar a matriz de compatibilidade antes do deploy.
 - Não inventar versões, comandos, resultados ou compatibilidade.
 - Usar fontes oficiais para decisões técnicas.
 - Parar se a documentação oficial contradizer o plano.
